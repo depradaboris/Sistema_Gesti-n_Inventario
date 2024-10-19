@@ -8,7 +8,7 @@ class ModelUser():
             #compruebo si el usuario existe
             cursor = db.connection.cursor() # inicializo cursor para interactuar con la db
             sql = """SELECT id_usuario,contraseña,email,nombre FROM usuario 
-              WHERE email = '{}'""".format(user.email) # tiene formato tupla [ id,contraseña,email,imag_usuario,nombre]     
+              WHERE email = '{}'""".format(user.email) # tiene formato tupla [ id_usuario,contraseña,email,nombre]     
             #compruebo la contraseña
             cursor.execute(sql)
             row = cursor.fetchone()
@@ -26,7 +26,7 @@ class ModelUser():
             #compruebo si el usuario existe
             cursor = db.connection.cursor() # inicializo cursor para interactuar con la db
             sql = """SELECT id_usuario,email,nombre FROM usuario 
-              WHERE id_usuario= {}""".format(id) # tiene formato tupla [ id,nombre,password]
+              WHERE id_usuario= {}""".format(id) # tiene formato tupla [ id_usuario,email,nombre]
             #compruebo la contraseña
             cursor.execute(sql)
             row = cursor.fetchone()

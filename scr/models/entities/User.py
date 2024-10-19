@@ -13,7 +13,7 @@ class User (UserMixin):
  
    @classmethod
    def check_password(self,hashed_password,password):
-        return check_password_hash(hashed_password,password)# hashed_passwor es el que esta gardado en la base de datos y password es el texto plano
+        return check_password_hash(hashed_password,password)# hashed_password es el que esta gardado en la base de datos y password es el texto plano
     
 #print (generate_password_hash("Est123456"))# poner esta linea para ver el pass hash generado
 
