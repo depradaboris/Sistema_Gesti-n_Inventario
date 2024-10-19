@@ -9,9 +9,11 @@
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="../common/css/plugins/fontawesome-free/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='common/css/plugins/fontawesome-free/css/all.min.css')}}">
   <!-- Theme style -->
-  <link rel="stylesheet" href="../common/css/dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='common/css/dist/css/adminlte.min.css')}}">
+  <!-- route of favicon-->
+  <link rel="icon" href="{{ url_for('static', filename='common/assents/favicon.ico') }}" type="image/x-icon" />
   
 </head>
 <body class="hold-transition sidebar-mini">
@@ -25,7 +27,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="dashboard.html" class="nav-link">Home</a>
+        <a href="home.html" class="nav-link">Home</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="#" class="nav-link">Contact</a>    <!--Agregar contanto email-->
@@ -67,8 +69,7 @@
         </a>
       </li>
       <li class="nav-item">
-         <button id="logout" onclick="logout()" class="btn btn-primary btn-block">Cerrar Sesión</button>
-         <script src="../common/js/logout.js"></script>
+         <a class="btn btn-secondary" href="{{url_for('logout')}}" >Cerrar Sesión</a>
       </li>
     </ul>
   </nav>
@@ -78,34 +79,19 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <div class="brand-link"> 
-      <img src="assets/usuario.jpg" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span id="rolUsuarioDisplay" class="brand-text font-weight-light"></span>
+      <img src="{{ url_for('static', filename='common/assents/favicon.ico')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <h3 class="brand-text font-weight-light">GDI</h3>
     </div>
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="../common/css/dist/img/user3-128x128.jpg" class="img-circle elevation-2" alt="User Image">
+          <!-- image of logged user-->
+          <img src="{{ url_for('static', filename='common/assents/usuario.png')}}" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
-              <a id="nombreUsuarioDisplay" class="d-block"></a>
-          <!-- corregir-->
-           
-           
-           <script>// Recuperar el nombre del usuario desde localStorage
-                const nombreUsuario = localStorage.getItem('nombreUsuario');
-                const rolUsuario = localStorage.getItem('rolUsuario');
-                if (nombreUsuario) {
-                    // Mostrar el nombre del usuario en la página
-                    document.getElementById('nombreUsuarioDisplay').textContent = nombreUsuario;
-                    document.getElementById('rolUsuarioDisplay').textContent = rolUsuario;
-                } else {
-                    // Si no hay un nombre en localStorage, redirigir al login
-                    window.location.href = '../index.html';  // Redirige al login si no hay usuario
-                }
-            </script>
-
+              <h4 style="color: rgb(255, 255, 255);">{{ current_user.name }}</h4>
         </div>
       </div>
       
@@ -235,14 +221,20 @@
               </li>
             </ul>
           </li>
-                 
+          <li class="nav-item" >
+            <a onclick="gestionarUsuario()" class="nav-link">
+              <i class="nav-icon fas fa-th"></i>
+              <p>
+                Gestionar Usuario
+              </p>
+            </a>
+          </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
   </aside>
-
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -261,122 +253,21 @@
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
-
     <!-- Main content -->
     <div class="content">
       <div class="container-fluid">
 
-        <div id="dashboard" class="card">
-          <div class="card-header">
-            <h5 class="m-0">Featured</h5>
-          </div>
-          <div class="card-body">
-            <h6 class="card-title">Special title treatment</h6>
 
-            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-            <a onclick="" class="btn btn-primary">Go somewhere</a>
-          </div>
-        </div>   
+
+        <!-- Aca se insertan las pantalla de acuedo a la opcion seleccionada-->
+
+      
         
-        <!-- tabla-->
-        <div id= "tabla" class="card">
-          <div class="card-header">
-            <h3 class="card-title">Fixed Header Table</h3>
-
-            <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
-                <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- /.card-header -->
-          <div class="card-body table-responsive p-0" style="height: 300px;">
-            <table class="table table-head-fixed text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>User</th>
-                  <th>Date</th>
-                  <th>Status</th>
-                  <th>Reason</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>183</td>
-                  <td>John Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>219</td>
-                  <td>Alexander Pierce</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>657</td>
-                  <td>Bob Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>175</td>
-                  <td>Mike Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>134</td>
-                  <td>Jim Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-success">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>494</td>
-                  <td>Victoria Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-warning">Pending</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>832</td>
-                  <td>Michael Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-primary">Approved</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-                <tr>
-                  <td>982</td>
-                  <td>Rocky Doe</td>
-                  <td>11-7-2014</td>
-                  <td><span class="tag tag-danger">Denied</span></td>
-                  <td>Bacon ipsum dolor sit amet salami venison chicken flank fatback doner.</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-
-        <!-- fin tabla-->
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
@@ -400,14 +291,11 @@
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
-
 <!-- jQuery -->
-<script src="../common/css/plugins/jquery/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='common/css/plugins/jquery/jquery.min.js')}}"></script>
 <!-- Bootstrap 4 -->
-<script src="../common/css/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="{{ url_for('static', filename='common/css/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <!-- AdminLTE App -->
-<script src="../common/css/dist/js/adminlte.min.js"></script>
-<script src="js/user.js"></script>
-
+<script src="{{ url_for('static', filename='common/css/dist/js/adminlte.min.js')}}"></script>
 </body>
 </html>
