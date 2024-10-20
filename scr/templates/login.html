@@ -4,22 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Gestion de Inventarios</title>
-
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="{{ url_for('static', filename='common/css/plugins/fontawesome-free/css/all.css') }}">
-  
   <!-- icheck bootstrap -->
   <link rel="stylesheet" href="{{ url_for('static', filename= 'common/css/plugins/icheck-bootstrap/icheck-bootstrap.min.css')}}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ url_for ('static', filename = 'common/css/dist/css/adminlte.min.css')}}">
-  <!--<script src="{{ url_for ('static', filename= 'common/js/control_acceso.js')}}" defer></script>-->
+  <link rel="icon" href="{{ url_for('static', filename='common/assents/favicon.ico') }}" type="image/x-icon" />
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
-
   <img src="{{ url_for ('static', filename = 'common/assents/imagen_login.jpg')}}" alt= "" width="360px" class="card card-outline ">
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
@@ -28,8 +25,16 @@
     <div class="card-body">
       <p class="login-box-msg">Inicia sesión para comenzar:</p>
       <p id="mensaje"></p>
-
       <form id="loginForm" action="/login" method="POST"  >
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-primary alert-dismissible" rol="alert">
+          <strong>{{ message }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
         <div class="input-group mb-3">
           <input type="text" name="email"  required class="form-control" placeholder="email">
           <div class="input-group-append">
@@ -42,6 +47,8 @@
           <input type="password" name="password" required class="form-control" placeholder="Password">
           <div class="input-group-append">
             <div class="input-group-text">
+              <!-- envio token de autentificacio-->
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
               <span class="fas fa-lock"></span>
             </div>
           </div>

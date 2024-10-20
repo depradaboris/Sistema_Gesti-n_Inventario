@@ -13,7 +13,7 @@ CREATE TABLE rol (
 CREATE TABLE usuario (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
     contraseña VARCHAR(255) NOT NULL,
     id_rol INT NOT NULL,
     FOREIGN KEY (id_rol) REFERENCES rol(id_rol)
