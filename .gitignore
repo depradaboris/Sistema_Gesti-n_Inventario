@@ -1,0 +1,9 @@
+# Entorno virtual
+.venv/
+
+# Archivos de compilación de Python
+__pycache__/
+*.py[cod]
+
+# Archivos temporales de IDEs
+.vscode/
